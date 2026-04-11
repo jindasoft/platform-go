@@ -1,0 +1,81 @@
+repos:
+  # Basic checks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+        exclude: docs/swagger.json
+      - id: check-yaml
+      - id: check-json
+      - id: check-merge-conflict
+      - id: check-case-conflict
+      - id: no-commit-to-branch
+        args: ["--branch", "main", "--branch", "develop"]
+      - id: mixed-line-ending
+        args: ["--fix=lf"]
+      - id: check-added-large-files
+        args: ["--maxkb=1000"]
+
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.24.2
+    hooks:
+      - id: gitleaks
+
+  # Go specific
+  - repo: https://github.com/dnephin/pre-commit-golang
+    rev: v0.5.1
+    hooks:
+      - id: go-fmt
+      - id: go-cyclo
+        args: [-over=15]
+      - id: golangci-lint
+
+  # Go local checks
+  - repo: local
+    hooks:
+      - id: go-imports
+        name: Go imports
+        entry: goimports -w .
+        language: system
+        pass_filenames: false
+      - id: go-vet
+        name: Go vet
+        entry: go vet ./...
+        language: system
+        pass_filenames: false
+      - id: go-mod-tidy
+        name: Go mod tidy
+        entry: go mod tidy
+        language: system
+        pass_filenames: false
+      # - id: unit-tests
+      #   name: Unit tests
+      #   entry: make test
+      #   language: system
+      #   pass_filenames: false
+      - id: vulnerability-check
+        name: Vulnerability check
+        entry: make vuln
+        language: system
+        pass_filenames: false
+      - id: security-check
+        name: Security check
+        entry: make sec
+        language: system
+        pass_filenames: false
+      - id: trivy-check
+        name: Trivy check
+        entry: make trivy
+        language: system
+        pass_filenames: false
+      # - id: generate-swagger
+      #   name: Generate swagger docs
+      #   entry: make swag
+      #   language: system
+      #   pass_filenames: false
+      # - id: go-build
+      #   name: Go build
+      #   entry: go build ./...
+      #   language: system
+      #   pass_filenames: false
