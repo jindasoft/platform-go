@@ -1,6 +1,6 @@
 module github.com/jindasoft/jinda-platforms
 
-go 1.26.0
+go 1.26.2
 
 require (
 	github.com/golang-jwt/jwt/v5 v5.3.1
@@ -35,7 +35,7 @@ require (
 require (
 	github.com/Code-Hex/dd v1.1.0 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
-	github.com/go-jose/go-jose/v4 v4.0.5 // indirect
+	github.com/go-jose/go-jose/v4 v4.1.4 // indirect
 	github.com/go-playground/validator/v10 v10.25.0
 	github.com/go-resty/resty/v2 v2.16.5
 	github.com/golang/snappy v1.0.0 // indirect
