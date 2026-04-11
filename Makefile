@@ -1,0 +1,19 @@
+vuln:
+	@echo "Checking for vulnerabilities..."
+	@govulncheck ./...
+
+vuln-v:
+	@echo "Checking for vulnerabilities (verbose)..."
+	@govulncheck -show=verbose ./...
+
+sec:
+	@echo "Checking for security issues..."
+	@gosec ./...
+
+check:
+	@echo "Pre-commit check..."
+	@pre-commit run --all-files
+
+trivy:
+	@echo "Running Trivy scan..."
+	@trivy fs --exit-code 1 --severity HIGH,CRITICAL .
