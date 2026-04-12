@@ -1,4 +1,4 @@
-module github.com/jindasoft/jinda-platforms
+module github.com/jindasoft/jinda-platform
 
 go 1.26.2
 

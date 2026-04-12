@@ -10,8 +10,8 @@ import (
 
 	"github.com/go-playground/validator/v10"
 	"github.com/google/uuid"
-	"github.com/jindasoft/jinda-platforms/xenums"
-	"github.com/jindasoft/jinda-platforms/xlogger"
+	"github.com/jindasoft/jinda-platform/xenums"
+	"github.com/jindasoft/jinda-platform/xlogger"
 	"github.com/stoewer/go-strcase"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )

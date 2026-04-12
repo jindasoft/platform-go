@@ -7,7 +7,7 @@ import (
 
 	vault "github.com/hashicorp/vault/api"
 	auth "github.com/hashicorp/vault/api/auth/approle"
-	"github.com/jindasoft/jinda-platforms/xlogger"
+	"github.com/jindasoft/jinda-platform/xlogger"
 	"github.com/mitchellh/mapstructure"
 )
 

@@ -5,8 +5,8 @@ import (
 	"fmt"
 
 	"github.com/google/uuid"
-	"github.com/jindasoft/jinda-platforms/xconst"
-	"github.com/jindasoft/jinda-platforms/xutils"
+	"github.com/jindasoft/jinda-platform/xconst"
+	"github.com/jindasoft/jinda-platform/xutils"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 

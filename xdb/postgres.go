@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/jindasoft/jinda-platforms/xlogger"
+	"github.com/jindasoft/jinda-platform/xlogger"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
