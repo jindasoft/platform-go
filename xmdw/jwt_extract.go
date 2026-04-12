@@ -7,8 +7,8 @@ import (
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
-	"github.com/jindasoft/jinda-platforms/xconst"
-	"github.com/jindasoft/jinda-platforms/xlogger"
+	"github.com/jindasoft/jinda-platform/xconst"
+	"github.com/jindasoft/jinda-platform/xlogger"
 	"github.com/labstack/echo/v5"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )

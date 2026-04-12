@@ -1,1 +1,1 @@
-# jinda-platforms
+# jinda-platform

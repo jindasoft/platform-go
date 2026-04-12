@@ -6,8 +6,8 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/jindasoft/jinda-platforms/xauth"
-	"github.com/jindasoft/jinda-platforms/xutils"
+	"github.com/jindasoft/jinda-platform/xauth"
+	"github.com/jindasoft/jinda-platform/xutils"
 	"github.com/jinzhu/copier"
 	"go.uber.org/zap"
 )

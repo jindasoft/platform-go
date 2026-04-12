@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/google/uuid"
-	"github.com/jindasoft/jinda-platforms/xconst"
+	"github.com/jindasoft/jinda-platform/xconst"
 	"github.com/labstack/echo/v5"
 	"github.com/labstack/echo/v5/middleware"
 )

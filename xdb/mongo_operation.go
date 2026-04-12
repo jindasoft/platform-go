@@ -6,8 +6,8 @@ import (
 	"reflect"
 	"time"
 
-	"github.com/jindasoft/jinda-platforms/xauth"
-	"github.com/jindasoft/jinda-platforms/xentities"
+	"github.com/jindasoft/jinda-platform/xauth"
+	"github.com/jindasoft/jinda-platform/xentities"
 	"github.com/stoewer/go-strcase"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"

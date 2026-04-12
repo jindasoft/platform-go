@@ -1,6 +1,6 @@
 package xutils
 
-import "github.com/jindasoft/jinda-platforms/xconst"
+import "github.com/jindasoft/jinda-platform/xconst"
 
 func SetDefaultPageSize(offset, limit int64) (int64, int64) {
 	o := max(offset, 0)
