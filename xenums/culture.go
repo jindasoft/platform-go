@@ -34,7 +34,7 @@ var CultureMap = map[string]Culture{
 	strings.ToLower(CultureRuRU.String()): CultureRuRU,
 }
 
-func PairCulture(culture string) (Culture, error) {
+func FromCultureCode(culture string) (Culture, error) {
 	culture = strings.TrimSpace(culture)
 	culture = strings.ToLower(culture)
 
