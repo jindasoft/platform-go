@@ -34,7 +34,7 @@ func RequestCultureMiddleware() echo.MiddlewareFunc {
 }
 
 func ToCultureCode(cultureCode string) xenums.Culture {
-	culture, err := xenums.PairCulture(cultureCode)
+	culture, err := xenums.FromCultureCode(cultureCode)
 	if err != nil {
 		return xenums.CultureDefault
 	}

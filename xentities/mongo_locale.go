@@ -22,7 +22,7 @@ type MongoLocale struct {
 
 func (l MongoLocale) String(ctx context.Context) string {
 	cul := xutils.GetCulture(ctx)
-	culture, err := xenums.PairCulture(cul.String())
+	culture, err := xenums.FromCultureCode(cul.String())
 	if err != nil {
 		return l.EnUS // fallback
 	}
