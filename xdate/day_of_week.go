@@ -1,3 +1,7 @@
+package xdate
+
+import "time"
+
 type DayOfWeek string
 
 const (
