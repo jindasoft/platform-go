@@ -54,6 +54,7 @@ require (
 	github.com/labstack/echo/v5 v5.0.4
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
+	github.com/rabbitmq/amqp091-go v1.10.0
 	github.com/redis/go-redis/v9 v9.18.0
 	github.com/ryanuber/go-glob v1.0.0 // indirect
 	github.com/stoewer/go-strcase v1.3.0
