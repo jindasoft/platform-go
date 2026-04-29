@@ -14,7 +14,7 @@ type MongoBefore interface {
 	BeforeSoftDelete(ctx context.Context) error
 }
 
-type MongoBase struct {
+type MongoBaseModel struct {
 	ID        primitive.ObjectID  `json:"id,omitzero" bson:"_id,omitempty"`
 	Status    Status              `json:"status,omitzero" bson:"status,omitempty"`
 	CreatedAt time.Time           `json:"created_at,omitzero" bson:"created_at,omitempty"`
@@ -25,7 +25,7 @@ type MongoBase struct {
 	DeletedBy *primitive.ObjectID `json:"deleted_by,omitzero" bson:"deleted_by,omitempty"`
 }
 
-func (b *MongoBase) BeforeCreate(ctx context.Context) error {
+func (b *MongoBaseModel) BeforeCreate(ctx context.Context) error {
 	accountID, err := xauth.GetAccountOID(ctx)
 	if err != nil {
 		return err
@@ -41,7 +41,7 @@ func (b *MongoBase) BeforeCreate(ctx context.Context) error {
 	return nil
 }
 
-func (b *MongoBase) BeforeUpdate(ctx context.Context) error {
+func (b *MongoBaseModel) BeforeUpdate(ctx context.Context) error {
 	accountID, err := xauth.GetAccountOID(ctx)
 	if err != nil {
 		return err
@@ -53,7 +53,7 @@ func (b *MongoBase) BeforeUpdate(ctx context.Context) error {
 	return nil
 }
 
-func (b *MongoBase) BeforeSoftDelete(ctx context.Context) error {
+func (b *MongoBaseModel) BeforeSoftDelete(ctx context.Context) error {
 	accountID, err := xauth.GetAccountOID(ctx)
 	if err != nil {
 		return err

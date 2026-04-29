@@ -23,9 +23,9 @@ type PostgresService interface {
 type PostgresConfig struct {
 	Host     string
 	Port     int
+	Database string
 	User     string
 	Password string `json:"-"`
-	Database string
 	SSLMode  string // disable, allow, prefer, require, verify-ca, verify-full
 	IsDebug  bool
 }
@@ -80,12 +80,12 @@ func buildPostgresDSN(cfg *PostgresConfig) string {
 	}
 
 	dsn := fmt.Sprintf(
-		"host=%s port=%d user=%s password=%s dbname=%s sslmode=%s",
+		"host=%s port=%d dbname=%s user=%s password=%s sslmode=%s",
 		cfg.Host,
 		cfg.Port,
+		cfg.Database,
 		cfg.User,
 		cfg.Password,
-		cfg.Database,
 		sslMode,
 	)
 	return dsn
