@@ -33,10 +33,13 @@ type MongoService interface {
 }
 
 type MongoConfig struct {
-	Connection string
-	Options    string
-	DbName     string
-	IsDebug    bool
+	Host     string
+	Port     int
+	Database string
+	User     string
+	Password string `json:"-"`
+	Options  string
+	IsDebug  bool
 }
 
 type service struct {
@@ -49,7 +52,7 @@ func NewMongoService(ctx context.Context, cfg *MongoConfig) (*service, error) {
 		return nil, fmt.Errorf("failed to connect to MongoDB: %w", err)
 	}
 
-	mongo := client.Database(cfg.DbName)
+	mongo := client.Database(cfg.Database)
 	if mongo == nil {
 		return nil, fmt.Errorf("failed to get MongoDB database")
 	}
@@ -58,10 +61,16 @@ func NewMongoService(ctx context.Context, cfg *MongoConfig) (*service, error) {
 }
 
 func mongoClient(ctx context.Context, cfg *MongoConfig) (*mongo.Client, error) {
-	connection := fmt.Sprintf("%s/", cfg.Connection)
+	connection := fmt.Sprintf(
+		"mongodb://%s:%s@%s:%d",
+		cfg.User,
+		cfg.Password,
+		cfg.Host,
+		cfg.Port,
+	)
 
 	if cfg.Options != "" {
-		connection = fmt.Sprintf("%s/?%s", cfg.Connection, cfg.Options)
+		connection += fmt.Sprintf("/?%s", cfg.Options)
 	}
 
 	// Use the SetServerAPIOptions() method to set the version of the Stable API on the client
@@ -73,7 +82,7 @@ func mongoClient(ctx context.Context, cfg *MongoConfig) (*mongo.Client, error) {
 	if cfg.IsDebug {
 		cmdMonitor := &event.CommandMonitor{
 			Started: func(ctx context.Context, evt *event.CommandStartedEvent) {
-				xlogger.SysInfof("MongoDB CommandStartedEvent: %w", evt.Command.String())
+				xlogger.SysInfof("MongoDB CommandStartedEvent: %s", evt.Command.String())
 			},
 		}
 		opts = opts.SetMonitor(cmdMonitor)
