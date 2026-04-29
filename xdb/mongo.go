@@ -36,7 +36,7 @@ type MongoConfig struct {
 	Host     string
 	Port     int
 	Database string
-	User     string
+	Username string
 	Password string `json:"-"`
 	Options  string
 	IsDebug  bool
@@ -63,7 +63,7 @@ func NewMongoService(ctx context.Context, cfg *MongoConfig) (*service, error) {
 func mongoClient(ctx context.Context, cfg *MongoConfig) (*mongo.Client, error) {
 	connection := fmt.Sprintf(
 		"mongodb://%s:%s@%s:%d",
-		cfg.User,
+		cfg.Username,
 		cfg.Password,
 		cfg.Host,
 		cfg.Port,
