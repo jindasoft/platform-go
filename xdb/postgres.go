@@ -24,7 +24,7 @@ type PostgresConfig struct {
 	Host     string
 	Port     int
 	Database string
-	User     string
+	Username string
 	Password string `json:"-"`
 	SSLMode  string // disable, allow, prefer, require, verify-ca, verify-full
 	IsDebug  bool
@@ -84,7 +84,7 @@ func buildPostgresDSN(cfg *PostgresConfig) string {
 		cfg.Host,
 		cfg.Port,
 		cfg.Database,
-		cfg.User,
+		cfg.Username,
 		cfg.Password,
 		sslMode,
 	)

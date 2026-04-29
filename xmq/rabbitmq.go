@@ -13,7 +13,7 @@ const closeChannelErrMsg = "Failed to close channel: %v"
 type RabbitMQConfig struct {
 	Host        string
 	Port        int
-	User        string
+	Username    string
 	Password    string `json:"-"`
 	VirtualHost string
 }
@@ -32,7 +32,7 @@ type rabbitMQServiceImpl struct {
 
 func NewRabbitMQ(ctx context.Context, cfg *RabbitMQConfig) (RabbitMQService, error) {
 	conn, err := amqp.DialConfig(
-		fmt.Sprintf("amqp://%s:%s@%s:%d/%s", cfg.User, cfg.Password, cfg.Host, cfg.Port, cfg.VirtualHost),
+		fmt.Sprintf("amqp://%s:%s@%s:%d/%s", cfg.Username, cfg.Password, cfg.Host, cfg.Port, cfg.VirtualHost),
 		amqp.Config{},
 	)
 	if err != nil {
