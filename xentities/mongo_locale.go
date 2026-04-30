@@ -89,3 +89,37 @@ func ToMongoLocale(culture string, s string) (MongoLocale, error) {
 		return MongoLocale{EnUS: s}, nil
 	}
 }
+
+func ToMongoLocaleUpdate(locale MongoLocale, culture string, s string) (MongoLocale, error) {
+	c, err := xenums.FromCultureCode(culture)
+	if err != nil {
+		return locale, err
+	}
+
+	switch c {
+	case xenums.CultureEnUS:
+		locale.EnUS = s
+	case xenums.CultureThTH:
+		locale.ThTH = s
+	case xenums.CultureMsMY:
+		locale.MsMY = s
+	case xenums.CultureLoLA:
+		locale.LoLA = s
+	case xenums.CultureViVN:
+		locale.ViVN = s
+	case xenums.CultureJaJP:
+		locale.JaJP = s
+	case xenums.CultureKoKR:
+		locale.KoKR = s
+	case xenums.CultureZhTW:
+		locale.ZhTW = s
+	case xenums.CultureZhCN:
+		locale.ZhCN = s
+	case xenums.CultureRuRU:
+		locale.RuRU = s
+	default:
+		locale.EnUS = s
+	}
+
+	return locale, nil
+}
