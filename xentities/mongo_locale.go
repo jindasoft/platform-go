@@ -20,7 +20,7 @@ type MongoLocale struct {
 	RuRU string `json:"ru_ru" bson:"ru_ru"`
 }
 
-func (l MongoLocale) String(ctx context.Context) string {
+func (l MongoLocale) LocalizeString(ctx context.Context) string {
 	cul := xutils.GetCulture(ctx)
 	culture, err := xenums.FromCultureCode(cul.String())
 	if err != nil {
@@ -54,11 +54,41 @@ func (l MongoLocale) String(ctx context.Context) string {
 	}
 }
 
-func SetLocale(locale MongoLocale) MongoLocale {
-	return locale
+func (l MongoLocale) UpdateLocale(culture string, s string) (MongoLocale, error) {
+	c, err := xenums.FromCultureCode(culture)
+	if err != nil {
+		return l, err
+	}
+
+	switch c {
+	case xenums.CultureEnUS:
+		l.EnUS = s
+	case xenums.CultureThTH:
+		l.ThTH = s
+	case xenums.CultureMsMY:
+		l.MsMY = s
+	case xenums.CultureLoLA:
+		l.LoLA = s
+	case xenums.CultureViVN:
+		l.ViVN = s
+	case xenums.CultureJaJP:
+		l.JaJP = s
+	case xenums.CultureKoKR:
+		l.KoKR = s
+	case xenums.CultureZhTW:
+		l.ZhTW = s
+	case xenums.CultureZhCN:
+		l.ZhCN = s
+	case xenums.CultureRuRU:
+		l.RuRU = s
+	default:
+		l.EnUS = s
+	}
+
+	return l, nil
 }
 
-func ToMongoLocale(culture string, s string) (MongoLocale, error) {
+func NewMongoLocale(culture string, s string) (MongoLocale, error) {
 	c, err := xenums.FromCultureCode(culture)
 	if err != nil {
 		return MongoLocale{}, err
@@ -88,38 +118,4 @@ func ToMongoLocale(culture string, s string) (MongoLocale, error) {
 	default:
 		return MongoLocale{EnUS: s}, nil
 	}
-}
-
-func ToMongoLocaleUpdate(locale MongoLocale, culture string, s string) (MongoLocale, error) {
-	c, err := xenums.FromCultureCode(culture)
-	if err != nil {
-		return locale, err
-	}
-
-	switch c {
-	case xenums.CultureEnUS:
-		locale.EnUS = s
-	case xenums.CultureThTH:
-		locale.ThTH = s
-	case xenums.CultureMsMY:
-		locale.MsMY = s
-	case xenums.CultureLoLA:
-		locale.LoLA = s
-	case xenums.CultureViVN:
-		locale.ViVN = s
-	case xenums.CultureJaJP:
-		locale.JaJP = s
-	case xenums.CultureKoKR:
-		locale.KoKR = s
-	case xenums.CultureZhTW:
-		locale.ZhTW = s
-	case xenums.CultureZhCN:
-		locale.ZhCN = s
-	case xenums.CultureRuRU:
-		locale.RuRU = s
-	default:
-		locale.EnUS = s
-	}
-
-	return locale, nil
 }
