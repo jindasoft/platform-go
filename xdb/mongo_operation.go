@@ -317,6 +317,10 @@ func (s *service) SetIndexSearch(ctx context.Context, entity any, keys bson.D, u
 	return nil
 }
 
+func (s *service) SetIndexUnique(ctx context.Context, entity any, keys bson.D) error {
+	return s.SetIndexSearch(ctx, entity, keys, true)
+}
+
 func (s *service) Count(ctx context.Context, filter bson.M, entity any) (int64, error) {
 	entityName := reflect.TypeOf(entity).Elem().Name()
 	entitySnake := strcase.SnakeCase(entityName)
