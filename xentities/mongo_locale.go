@@ -57,3 +57,35 @@ func (l MongoLocale) String(ctx context.Context) string {
 func SetLocale(locale MongoLocale) MongoLocale {
 	return locale
 }
+
+func ToMongoLocale(culture string, s string) (MongoLocale, error) {
+	c, err := xenums.FromCultureCode(culture)
+	if err != nil {
+		return MongoLocale{}, err
+	}
+
+	switch c {
+	case xenums.CultureEnUS:
+		return MongoLocale{EnUS: s}, nil
+	case xenums.CultureThTH:
+		return MongoLocale{ThTH: s}, nil
+	case xenums.CultureMsMY:
+		return MongoLocale{MsMY: s}, nil
+	case xenums.CultureLoLA:
+		return MongoLocale{LoLA: s}, nil
+	case xenums.CultureViVN:
+		return MongoLocale{ViVN: s}, nil
+	case xenums.CultureJaJP:
+		return MongoLocale{JaJP: s}, nil
+	case xenums.CultureKoKR:
+		return MongoLocale{KoKR: s}, nil
+	case xenums.CultureZhTW:
+		return MongoLocale{ZhTW: s}, nil
+	case xenums.CultureZhCN:
+		return MongoLocale{ZhCN: s}, nil
+	case xenums.CultureRuRU:
+		return MongoLocale{RuRU: s}, nil
+	default:
+		return MongoLocale{EnUS: s}, nil
+	}
+}
