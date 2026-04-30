@@ -29,6 +29,7 @@ type MongoService interface {
 	ForceDeleteOne(ctx context.Context, filter bson.M, entity any) error
 	SetIndexTtl(ctx context.Context, entity any, field string, expireAfter int32) error
 	SetIndexSearch(ctx context.Context, entity any, keys bson.D, unique bool) error
+	SetIndexUnique(ctx context.Context, entity any, keys bson.D) error
 	Count(ctx context.Context, filter bson.M, entity any) (int64, error)
 }
 
