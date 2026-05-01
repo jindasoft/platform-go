@@ -173,7 +173,7 @@ func (s *service) InsertOneNoActor(ctx context.Context, entity any) error {
 	return nil
 }
 
-func (s *service) UpdateOne(ctx context.Context, filter bson.M, entity any) error {
+func (s *service) UpdateOne(ctx context.Context, filter bson.D, entity any) error {
 	entityName := reflect.TypeOf(entity).Elem().Name()
 	entitySnake := strcase.SnakeCase(entityName)
 	collection := s.mongo.Collection(entitySnake)
@@ -183,7 +183,7 @@ func (s *service) UpdateOne(ctx context.Context, filter bson.M, entity any) erro
 	}
 
 	// check record is not soft deleted
-	filter["deleted_at"] = nil
+	filter = append(filter, bson.E{Key: "deleted_at", Value: nil})
 
 	update := bson.M{"$set": entity}
 	if _, err := collection.UpdateOne(ctx, filter, update); err != nil {
@@ -193,13 +193,13 @@ func (s *service) UpdateOne(ctx context.Context, filter bson.M, entity any) erro
 	return nil
 }
 
-func (s *service) UpdateOneNoActor(ctx context.Context, filter bson.M, entity any) error {
+func (s *service) UpdateOneNoActor(ctx context.Context, filter bson.D, entity any) error {
 	entityName := reflect.TypeOf(entity).Elem().Name()
 	entitySnake := strcase.SnakeCase(entityName)
 	collection := s.mongo.Collection(entitySnake)
 
 	// check record is not soft deleted
-	filter["deleted_at"] = nil
+	filter = append(filter, bson.E{Key: "deleted_at", Value: nil})
 
 	update := bson.M{"$set": entity}
 	if _, err := collection.UpdateOne(ctx, filter, update); err != nil {
@@ -209,7 +209,7 @@ func (s *service) UpdateOneNoActor(ctx context.Context, filter bson.M, entity an
 	return nil
 }
 
-func (s *service) UpdateIncrement(ctx context.Context, filter bson.M, field string, value int64, entity any) error {
+func (s *service) UpdateIncrement(ctx context.Context, filter bson.D, field string, value int64, entity any) error {
 	entityName := reflect.TypeOf(entity).Elem().Name()
 	entitySnake := strcase.SnakeCase(entityName)
 	collection := s.mongo.Collection(entitySnake)
@@ -222,7 +222,7 @@ func (s *service) UpdateIncrement(ctx context.Context, filter bson.M, field stri
 	return nil
 }
 
-func (s *service) SoftDeleteOne(ctx context.Context, filter bson.M, entity any) error {
+func (s *service) SoftDeleteOne(ctx context.Context, filter bson.D, entity any) error {
 	entityName := reflect.TypeOf(entity).Elem().Name()
 	entitySnake := strcase.SnakeCase(entityName)
 	collection := s.mongo.Collection(entitySnake)
@@ -232,7 +232,7 @@ func (s *service) SoftDeleteOne(ctx context.Context, filter bson.M, entity any) 
 	}
 
 	// check record is not soft deleted
-	filter["deleted_at"] = nil
+	filter = append(filter, bson.E{Key: "deleted_at", Value: nil})
 
 	update := bson.M{"$set": entity}
 	if _, err := collection.UpdateOne(ctx, filter, update); err != nil {
@@ -242,7 +242,7 @@ func (s *service) SoftDeleteOne(ctx context.Context, filter bson.M, entity any) 
 	return nil
 }
 
-func (s *service) SoftDeleteMany(ctx context.Context, filter bson.M, entity any) error {
+func (s *service) SoftDeleteMany(ctx context.Context, filter bson.D, entity any) error {
 	entityName := reflect.TypeOf(entity).Elem().Name()
 	entitySnake := strcase.SnakeCase(entityName)
 	collection := s.mongo.Collection(entitySnake)
@@ -253,7 +253,7 @@ func (s *service) SoftDeleteMany(ctx context.Context, filter bson.M, entity any)
 	}
 
 	// check record is not soft deleted
-	filter["deleted_at"] = nil
+	filter = append(filter, bson.E{Key: "deleted_at", Value: nil})
 	update := bson.M{
 		"$set": bson.M{
 			"status":     xentities.StatusDeleted,
@@ -269,7 +269,7 @@ func (s *service) SoftDeleteMany(ctx context.Context, filter bson.M, entity any)
 	return nil
 }
 
-func (s *service) ForceDeleteOne(ctx context.Context, filter bson.M, entity any) error {
+func (s *service) ForceDeleteOne(ctx context.Context, filter bson.D, entity any) error {
 	entityName := reflect.TypeOf(entity).Elem().Name()
 	entitySnake := strcase.SnakeCase(entityName)
 	collection := s.mongo.Collection(entitySnake)
@@ -321,12 +321,12 @@ func (s *service) SetIndexUnique(ctx context.Context, entity any, keys bson.D) e
 	return s.SetIndexSearch(ctx, entity, keys, true)
 }
 
-func (s *service) Count(ctx context.Context, filter bson.M, entity any) (int64, error) {
+func (s *service) Count(ctx context.Context, filter bson.D, entity any) (int64, error) {
 	entityName := reflect.TypeOf(entity).Elem().Name()
 	entitySnake := strcase.SnakeCase(entityName)
 	collection := s.mongo.Collection(entitySnake)
 
-	filter["deleted_at"] = nil
+	filter = append(filter, bson.E{Key: "deleted_at", Value: nil})
 
 	count, err := collection.CountDocuments(ctx, filter)
 	if err != nil {

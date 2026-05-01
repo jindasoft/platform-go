@@ -21,16 +21,16 @@ type MongoService interface {
 	AggregateSample(ctx context.Context, filter bson.D, sampleSize int, entity any) error
 	InsertOne(ctx context.Context, entity any) error
 	InsertOneNoActor(ctx context.Context, entity any) error
-	UpdateOne(ctx context.Context, filter bson.M, entity any) error
-	UpdateOneNoActor(ctx context.Context, filter bson.M, entity any) error
-	UpdateIncrement(ctx context.Context, filter bson.M, field string, value int64, entity any) error
-	SoftDeleteOne(ctx context.Context, filter bson.M, entity any) error
-	SoftDeleteMany(ctx context.Context, filter bson.M, entity any) error
-	ForceDeleteOne(ctx context.Context, filter bson.M, entity any) error
+	UpdateOne(ctx context.Context, filter bson.D, entity any) error
+	UpdateOneNoActor(ctx context.Context, filter bson.D, entity any) error
+	UpdateIncrement(ctx context.Context, filter bson.D, field string, value int64, entity any) error
+	SoftDeleteOne(ctx context.Context, filter bson.D, entity any) error
+	SoftDeleteMany(ctx context.Context, filter bson.D, entity any) error
+	ForceDeleteOne(ctx context.Context, filter bson.D, entity any) error
 	SetIndexTtl(ctx context.Context, entity any, field string, expireAfter int32) error
 	SetIndexSearch(ctx context.Context, entity any, keys bson.D, unique bool) error
 	SetIndexUnique(ctx context.Context, entity any, keys bson.D) error
-	Count(ctx context.Context, filter bson.M, entity any) (int64, error)
+	Count(ctx context.Context, filter bson.D, entity any) (int64, error)
 }
 
 type MongoConfig struct {
