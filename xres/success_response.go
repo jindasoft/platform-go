@@ -28,9 +28,9 @@ func Success[T any](c *echo.Context, data T) error {
 }
 
 type PagingMeta struct {
-	Offset     int64 `json:"offset" example:"0"`
-	Limit      int64 `json:"limit" example:"10"`
-	TotalItems int64 `json:"total_items" example:"100"`
+	Offset int64 `json:"offset" example:"0"`
+	Limit  int64 `json:"limit" example:"10"`
+	Total  int64 `json:"total" example:"100"`
 }
 
 type PagingResponse struct {
