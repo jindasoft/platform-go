@@ -21,32 +21,32 @@ type MongoLocale struct {
 }
 
 func (l MongoLocale) LocalizeString(ctx context.Context) string {
-	cul := xutils.GetCulture(ctx)
-	culture, err := xenums.FromCultureCode(cul.String())
+	cul := xutils.GetLocale(ctx)
+	locale, err := xenums.FromLocaleCode(cul.String())
 	if err != nil {
 		return l.EnUS // fallback
 	}
 
-	switch culture {
-	case xenums.CultureEnUS:
+	switch locale {
+	case xenums.LocaleEnUS:
 		return l.EnUS
-	case xenums.CultureThTH:
+	case xenums.LocaleThTH:
 		return l.ThTH
-	case xenums.CultureMsMY:
+	case xenums.LocaleMsMY:
 		return l.MsMY
-	case xenums.CultureLoLA:
+	case xenums.LocaleLoLA:
 		return l.LoLA
-	case xenums.CultureViVN:
+	case xenums.LocaleViVN:
 		return l.ViVN
-	case xenums.CultureJaJP:
+	case xenums.LocaleJaJP:
 		return l.JaJP
-	case xenums.CultureKoKR:
+	case xenums.LocaleKoKR:
 		return l.KoKR
-	case xenums.CultureZhTW:
+	case xenums.LocaleZhTW:
 		return l.ZhTW
-	case xenums.CultureZhCN:
+	case xenums.LocaleZhCN:
 		return l.ZhCN
-	case xenums.CultureRuRU:
+	case xenums.LocaleRuRU:
 		return l.RuRU
 
 	default:
@@ -54,32 +54,32 @@ func (l MongoLocale) LocalizeString(ctx context.Context) string {
 	}
 }
 
-func (l MongoLocale) UpdateLocale(culture string, s string) (MongoLocale, error) {
-	c, err := xenums.FromCultureCode(culture)
+func (l MongoLocale) UpdateLocale(locale string, s string) (MongoLocale, error) {
+	c, err := xenums.FromLocaleCode(locale)
 	if err != nil {
 		return l, err
 	}
 
 	switch c {
-	case xenums.CultureEnUS:
+	case xenums.LocaleEnUS:
 		l.EnUS = s
-	case xenums.CultureThTH:
+	case xenums.LocaleThTH:
 		l.ThTH = s
-	case xenums.CultureMsMY:
+	case xenums.LocaleMsMY:
 		l.MsMY = s
-	case xenums.CultureLoLA:
+	case xenums.LocaleLoLA:
 		l.LoLA = s
-	case xenums.CultureViVN:
+	case xenums.LocaleViVN:
 		l.ViVN = s
-	case xenums.CultureJaJP:
+	case xenums.LocaleJaJP:
 		l.JaJP = s
-	case xenums.CultureKoKR:
+	case xenums.LocaleKoKR:
 		l.KoKR = s
-	case xenums.CultureZhTW:
+	case xenums.LocaleZhTW:
 		l.ZhTW = s
-	case xenums.CultureZhCN:
+	case xenums.LocaleZhCN:
 		l.ZhCN = s
-	case xenums.CultureRuRU:
+	case xenums.LocaleRuRU:
 		l.RuRU = s
 	default:
 		l.EnUS = s
@@ -88,32 +88,32 @@ func (l MongoLocale) UpdateLocale(culture string, s string) (MongoLocale, error)
 	return l, nil
 }
 
-func NewMongoLocale(culture string, s string) (MongoLocale, error) {
-	c, err := xenums.FromCultureCode(culture)
+func NewMongoLocale(locale string, s string) (MongoLocale, error) {
+	c, err := xenums.FromLocaleCode(locale)
 	if err != nil {
 		return MongoLocale{}, err
 	}
 
 	switch c {
-	case xenums.CultureEnUS:
+	case xenums.LocaleEnUS:
 		return MongoLocale{EnUS: s}, nil
-	case xenums.CultureThTH:
+	case xenums.LocaleThTH:
 		return MongoLocale{ThTH: s}, nil
-	case xenums.CultureMsMY:
+	case xenums.LocaleMsMY:
 		return MongoLocale{MsMY: s}, nil
-	case xenums.CultureLoLA:
+	case xenums.LocaleLoLA:
 		return MongoLocale{LoLA: s}, nil
-	case xenums.CultureViVN:
+	case xenums.LocaleViVN:
 		return MongoLocale{ViVN: s}, nil
-	case xenums.CultureJaJP:
+	case xenums.LocaleJaJP:
 		return MongoLocale{JaJP: s}, nil
-	case xenums.CultureKoKR:
+	case xenums.LocaleKoKR:
 		return MongoLocale{KoKR: s}, nil
-	case xenums.CultureZhTW:
+	case xenums.LocaleZhTW:
 		return MongoLocale{ZhTW: s}, nil
-	case xenums.CultureZhCN:
+	case xenums.LocaleZhCN:
 		return MongoLocale{ZhCN: s}, nil
-	case xenums.CultureRuRU:
+	case xenums.LocaleRuRU:
 		return MongoLocale{RuRU: s}, nil
 	default:
 		return MongoLocale{EnUS: s}, nil

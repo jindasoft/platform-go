@@ -22,7 +22,7 @@ func New(ctx context.Context, debug *bool) *Service {
 		// Set default headers
 		req.Header.Set(xconst.HeaderXCorrelationID, xutils.GetCorrelationIDString(req.Context()))
 		req.Header.Set(xconst.HeaderXTraceID, xutils.GetTraceIDString(req.Context()))
-		req.Header.Set(xconst.HeaderAcceptLanguage, xutils.GetCultureString(req.Context()))
+		req.Header.Set(xconst.HeaderAcceptLanguage, xutils.GetLocaleString(req.Context()))
 
 		return nil
 	})

@@ -43,7 +43,7 @@ func NewCustomValidator(cfg Config, opts ...Opt) *CustomValidator {
 	_ = v.RegisterValidation("regexp", validationRegexp)
 	_ = v.RegisterValidation("is_floating_point", validateIsFloatingPoint)
 	_ = v.RegisterValidation("string_between", validateStringWithBetweenLength)
-	_ = v.RegisterValidation("lang", validateLanguage)
+	_ = v.RegisterValidation("locale", validateLocale)
 
 	var opt Opt
 	if len(opts) > 0 {
@@ -238,14 +238,14 @@ func validateStringWithBetweenLength(fl validator.FieldLevel) bool {
 	return true
 }
 
-func validateLanguage(fl validator.FieldLevel) bool {
+func validateLocale(fl validator.FieldLevel) bool {
 	lang := strings.TrimSpace(fl.Field().String())
 
-	culture, err := xenums.FromCultureCode(lang)
+	locale, err := xenums.FromLocaleCode(lang)
 	if err != nil {
-		xlogger.SysErrorf("Invalid validate tag for lang: %s", err)
+		xlogger.SysErrorf("Invalid validate tag for locale: %s", err)
 		return false
 	}
 
-	return culture.IsValid()
+	return locale.IsValid()
 }

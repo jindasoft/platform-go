@@ -8,7 +8,7 @@ const (
 	ContextCorrelationID ContextKey = "CorrelationID"
 	ContextServiceName   ContextKey = "ServiceName"
 	ContextEnvironment   ContextKey = "Environment"
-	ContextCultureCode   ContextKey = "CultureCode"
+	ContextLocaleCode    ContextKey = "LocaleCode"
 )
 
 const (

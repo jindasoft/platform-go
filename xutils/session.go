@@ -62,19 +62,19 @@ func GetSpanIDString(ctx context.Context) string {
 	return str
 }
 
-func GetCulture(ctx context.Context) xenums.Culture {
-	cul, ok := ctx.Value(xconst.ContextCultureCode).(xenums.Culture)
+func GetLocale(ctx context.Context) xenums.Locale {
+	cul, ok := ctx.Value(xconst.ContextLocaleCode).(xenums.Locale)
 	if !ok {
-		return xenums.CultureDefault
+		return xenums.LocaleDefault
 	}
 
 	return cul
 }
 
-func GetCultureString(ctx context.Context) string {
-	cul, ok := ctx.Value(xconst.ContextCultureCode).(xenums.Culture)
+func GetLocaleString(ctx context.Context) string {
+	cul, ok := ctx.Value(xconst.ContextLocaleCode).(xenums.Locale)
 	if !ok {
-		return xenums.CultureDefault.String()
+		return xenums.LocaleDefault.String()
 	}
 
 	return cul.String()
