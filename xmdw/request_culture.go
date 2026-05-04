@@ -8,24 +8,24 @@ import (
 	"github.com/labstack/echo/v5"
 )
 
-func RequestCultureMiddleware() echo.MiddlewareFunc {
+func RequestLocaleMiddleware() echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c *echo.Context) error {
-			culture := xenums.CultureDefault
+			locale := xenums.LocaleDefault
 
 			lang := c.QueryParam("lang")
 			if lang != "" {
-				culture = ToCultureCode(lang)
+				locale = ToLocaleCode(lang)
 			} else {
 				acceptLang := c.Request().Header.Get(xconst.HeaderAcceptLanguage)
 				if acceptLang != "" {
-					culture = ToCultureCode(acceptLang)
+					locale = ToLocaleCode(acceptLang)
 				}
 			}
 
 			// set to context
 			ctx := c.Request().Context()
-			ctx = context.WithValue(ctx, xconst.ContextCultureCode, culture)
+			ctx = context.WithValue(ctx, xconst.ContextLocaleCode, locale)
 			c.SetRequest(c.Request().WithContext(ctx))
 
 			return next(c)
@@ -33,11 +33,11 @@ func RequestCultureMiddleware() echo.MiddlewareFunc {
 	}
 }
 
-func ToCultureCode(cultureCode string) xenums.Culture {
-	culture, err := xenums.FromCultureCode(cultureCode)
+func ToLocaleCode(localeCode string) xenums.Locale {
+	locale, err := xenums.FromLocaleCode(localeCode)
 	if err != nil {
-		return xenums.CultureDefault
+		return xenums.LocaleDefault
 	}
 
-	return culture
+	return locale
 }
