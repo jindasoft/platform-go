@@ -79,6 +79,25 @@ func DynamoPaging[T any](c *echo.Context, data T, meta DynamoPagingMeta) error {
 	return c.JSON(http.StatusOK, r)
 }
 
+// 200 OK (Updated)
+type UpdatedResponse struct {
+	Success bool   `json:"success" example:"true"`
+	Type    string `json:"type" example:"updated"`
+	Message string `json:"message" example:"Updated."`
+	Data    any    `json:"data,omitempty"`
+}
+
+func Updated[T any](c *echo.Context, data T) error {
+	r := UpdatedResponse{
+		Success: true,
+		Type:    "updated",
+		Message: "Updated.",
+		Data:    data,
+	}
+
+	return c.JSON(http.StatusOK, r)
+}
+
 // 201 Created
 type CreatedResponse struct {
 	Success bool   `json:"success" example:"true"`
@@ -115,6 +134,10 @@ func Accepted[T any](c *echo.Context, data T) error {
 	}
 
 	return c.JSON(http.StatusAccepted, r)
+}
+
+func Deleted(c *echo.Context) error {
+	return NoContent(c)
 }
 
 // 204 No Content
