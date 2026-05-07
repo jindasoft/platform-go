@@ -9,15 +9,15 @@ import (
 const SuccessfulMessage = "Successful."
 
 // 200 OK
-type SuccessResponse struct {
+type SuccessResponse[T any] struct {
 	Success bool   `json:"success" example:"true"`
 	Type    string `json:"type" example:"success"`
 	Message string `json:"message" example:"Successful."`
-	Data    any    `json:"data,omitempty"`
+	Data    T      `json:"data,omitempty"`
 }
 
 func Success[T any](c *echo.Context, data T) error {
-	r := SuccessResponse{
+	r := SuccessResponse[T]{
 		Success: true,
 		Type:    "success",
 		Message: SuccessfulMessage,
@@ -33,16 +33,16 @@ type PagingMeta struct {
 	Total  int64 `json:"total" example:"100"`
 }
 
-type PagingResponse struct {
+type PagingResponse[T any] struct {
 	Success bool       `json:"success" example:"true"`
 	Type    string     `json:"type" example:"success"`
 	Message string     `json:"message" example:"Successful."`
 	Meta    PagingMeta `json:"meta"`
-	Data    any        `json:"data,omitempty"`
+	Data    T          `json:"data,omitempty"`
 }
 
 func Paging[T any](c *echo.Context, data T, meta PagingMeta) error {
-	r := PagingResponse{
+	r := PagingResponse[T]{
 		Success: true,
 		Type:    "success",
 		Message: SuccessfulMessage,
@@ -59,16 +59,16 @@ type DynamoPagingMeta struct {
 	HasMore           bool   `json:"has_more" example:"true"`
 }
 
-type DynamoPagingResponse struct {
+type DynamoPagingResponse[T any] struct {
 	Success bool             `json:"success" example:"true"`
 	Type    string           `json:"type" example:"success"`
 	Message string           `json:"message" example:"Successful."`
 	Meta    DynamoPagingMeta `json:"meta"`
-	Data    any              `json:"data,omitempty"`
+	Data    T                `json:"data,omitempty"`
 }
 
 func DynamoPaging[T any](c *echo.Context, data T, meta DynamoPagingMeta) error {
-	r := DynamoPagingResponse{
+	r := DynamoPagingResponse[T]{
 		Success: true,
 		Type:    "success",
 		Message: SuccessfulMessage,
@@ -80,15 +80,15 @@ func DynamoPaging[T any](c *echo.Context, data T, meta DynamoPagingMeta) error {
 }
 
 // 200 OK (Updated)
-type UpdatedResponse struct {
+type UpdatedResponse[T any] struct {
 	Success bool   `json:"success" example:"true"`
 	Type    string `json:"type" example:"updated"`
 	Message string `json:"message" example:"Updated."`
-	Data    any    `json:"data,omitempty"`
+	Data    T      `json:"data,omitempty"`
 }
 
 func Updated[T any](c *echo.Context, data T) error {
-	r := UpdatedResponse{
+	r := UpdatedResponse[T]{
 		Success: true,
 		Type:    "updated",
 		Message: "Updated.",
@@ -99,15 +99,15 @@ func Updated[T any](c *echo.Context, data T) error {
 }
 
 // 201 Created
-type CreatedResponse struct {
+type CreatedResponse[T any] struct {
 	Success bool   `json:"success" example:"true"`
 	Type    string `json:"type" example:"created"`
 	Message string `json:"message" example:"Created."`
-	Data    any    `json:"data,omitempty"`
+	Data    T      `json:"data,omitempty"`
 }
 
 func Created[T any](c *echo.Context, data T) error {
-	r := CreatedResponse{
+	r := CreatedResponse[T]{
 		Success: true,
 		Type:    "created",
 		Message: "Created.",
@@ -118,15 +118,15 @@ func Created[T any](c *echo.Context, data T) error {
 }
 
 // 202 Accepted
-type AcceptedResponse struct {
+type AcceptedResponse[T any] struct {
 	Success bool   `json:"success" example:"true"`
 	Type    string `json:"type" example:"accepted"`
 	Message string `json:"message" example:"Accepted."`
-	Data    any    `json:"data,omitempty"`
+	Data    T      `json:"data,omitempty"`
 }
 
 func Accepted[T any](c *echo.Context, data T) error {
-	r := AcceptedResponse{
+	r := AcceptedResponse[T]{
 		Success: true,
 		Type:    "accepted",
 		Message: "Accepted.",
