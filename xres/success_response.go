@@ -41,13 +41,13 @@ type PagingResponse[T any] struct {
 	Data    T          `json:"data,omitempty"`
 }
 
-func Paging[T any](c *echo.Context, data T, meta PagingMeta) error {
+func Paging[T any](c *echo.Context, data T, meta *PagingMeta) error {
 	r := PagingResponse[T]{
 		Success: true,
 		Type:    "success",
 		Message: SuccessfulMessage,
 		Data:    data,
-		Meta:    meta,
+		Meta:    *meta,
 	}
 
 	return c.JSON(http.StatusOK, r)
@@ -67,13 +67,13 @@ type DynamoPagingResponse[T any] struct {
 	Data    T                `json:"data,omitempty"`
 }
 
-func DynamoPaging[T any](c *echo.Context, data T, meta DynamoPagingMeta) error {
+func DynamoPaging[T any](c *echo.Context, data T, meta *DynamoPagingMeta) error {
 	r := DynamoPagingResponse[T]{
 		Success: true,
 		Type:    "success",
 		Message: SuccessfulMessage,
 		Data:    data,
-		Meta:    meta,
+		Meta:    *meta,
 	}
 
 	return c.JSON(http.StatusOK, r)
