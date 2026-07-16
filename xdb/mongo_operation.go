@@ -166,6 +166,10 @@ func (s *service) InsertOneNoActor(ctx context.Context, entity any) error {
 	entitySnake := strcase.SnakeCase(entityName)
 	collection := s.mongo.Collection(entitySnake)
 
+	if err := entity.(xentities.MongoBefore).BeforeCreateNoActor(ctx); err != nil {
+		return fmt.Errorf(errFailedToPrepare, err)
+	}
+
 	if _, err := collection.InsertOne(ctx, entity); err != nil {
 		return fmt.Errorf("failed to insert data: %w", err)
 	}
@@ -197,6 +201,10 @@ func (s *service) UpdateOneNoActor(ctx context.Context, filter bson.D, entity an
 	entityName := reflect.TypeOf(entity).Elem().Name()
 	entitySnake := strcase.SnakeCase(entityName)
 	collection := s.mongo.Collection(entitySnake)
+
+	if err := entity.(xentities.MongoBefore).BeforeUpdateNoActor(ctx); err != nil {
+		return fmt.Errorf(errFailedToPrepare, err)
+	}
 
 	// check record is not soft deleted
 	filter = append(filter, bson.E{Key: "deleted_at", Value: nil})
