@@ -10,7 +10,9 @@ import (
 
 type MongoBefore interface {
 	BeforeCreate(ctx context.Context) error
+	BeforeCreateNoActor(ctx context.Context) error
 	BeforeUpdate(ctx context.Context) error
+	BeforeUpdateNoActor(ctx context.Context) error
 	BeforeSoftDelete(ctx context.Context) error
 }
 
@@ -63,6 +65,24 @@ func (b *MongoBaseModel) BeforeSoftDelete(ctx context.Context) error {
 	b.Status = StatusDeleted
 	b.DeletedAt = &now
 	b.DeletedBy = &accountID
+
+	return nil
+}
+
+func (b *MongoBaseModel) BeforeCreateNoActor(ctx context.Context) error {
+	b.ID = primitive.NewObjectID()
+	b.Status = StatusActive
+	b.CreatedAt = time.Now()
+	b.CreatedBy = primitive.NilObjectID
+	b.UpdatedAt = time.Now()
+	b.UpdatedBy = primitive.NilObjectID
+
+	return nil
+}
+
+func (b *MongoBaseModel) BeforeUpdateNoActor(ctx context.Context) error {
+	b.UpdatedAt = time.Now()
+	b.UpdatedBy = primitive.NilObjectID
 
 	return nil
 }
