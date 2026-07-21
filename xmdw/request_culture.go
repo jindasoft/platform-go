@@ -34,7 +34,7 @@ func RequestLocaleMiddleware() echo.MiddlewareFunc {
 }
 
 func ToLocaleCode(localeCode string) xenums.Locale {
-	locale, err := xenums.FromLocaleCode(localeCode)
+	locale, err := xenums.ParseLocale(localeCode)
 	if err != nil {
 		return xenums.LocaleDefault
 	}

@@ -22,7 +22,7 @@ type MongoLocale struct {
 
 func (l MongoLocale) LocalizeString(ctx context.Context) string {
 	cul := xutils.GetLocale(ctx)
-	locale, err := xenums.FromLocaleCode(cul.String())
+	locale, err := xenums.ParseLocale(cul.String())
 	if err != nil {
 		return l.EnUS // fallback
 	}
@@ -55,7 +55,7 @@ func (l MongoLocale) LocalizeString(ctx context.Context) string {
 }
 
 func (l MongoLocale) UpdateLocale(locale string, s string) (MongoLocale, error) {
-	c, err := xenums.FromLocaleCode(locale)
+	c, err := xenums.ParseLocale(locale)
 	if err != nil {
 		return l, err
 	}
@@ -89,7 +89,7 @@ func (l MongoLocale) UpdateLocale(locale string, s string) (MongoLocale, error) 
 }
 
 func NewMongoLocale(locale string, s string) (MongoLocale, error) {
-	c, err := xenums.FromLocaleCode(locale)
+	c, err := xenums.ParseLocale(locale)
 	if err != nil {
 		return MongoLocale{}, err
 	}
