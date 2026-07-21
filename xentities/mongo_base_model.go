@@ -33,7 +33,9 @@ func (b *MongoBaseModel) BeforeCreate(ctx context.Context) error {
 		return err
 	}
 
-	b.ID = primitive.NewObjectID()
+	if b.ID.IsZero() {
+		b.ID = primitive.NewObjectID()
+	}
 	b.Status = StatusActive
 	b.CreatedAt = time.Now()
 	b.CreatedBy = accountID
@@ -70,7 +72,9 @@ func (b *MongoBaseModel) BeforeSoftDelete(ctx context.Context) error {
 }
 
 func (b *MongoBaseModel) BeforeCreateNoActor(ctx context.Context) error {
-	b.ID = primitive.NewObjectID()
+	if b.ID.IsZero() {
+		b.ID = primitive.NewObjectID()
+	}
 	b.Status = StatusActive
 	b.CreatedAt = time.Now()
 	b.CreatedBy = primitive.NilObjectID
