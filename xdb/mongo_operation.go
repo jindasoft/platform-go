@@ -2,6 +2,7 @@ package xdb
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"reflect"
 	"time"
@@ -16,10 +17,23 @@ import (
 )
 
 const (
+	errDataNotFound        = "data not found: %w"
 	errFailedToDecode      = "failed to decode data: %w"
 	errFailedToPrepare     = "failed to prepare data: %w"
 	errFailedToCloseCursor = "failed to close cursor: %v\n"
 )
+
+func IsNotFound(err error) bool {
+	return errors.Is(err, mongo.ErrNoDocuments)
+}
+
+func wrapFindOneError(err error) error {
+	if IsNotFound(err) {
+		return fmt.Errorf(errDataNotFound, err)
+	}
+
+	return fmt.Errorf(errFailedToDecode, err)
+}
 
 func (s *service) FindOne(ctx context.Context, filter bson.D, entity any) error {
 	entityName := reflect.TypeOf(entity).Elem().Name()
@@ -30,7 +44,7 @@ func (s *service) FindOne(ctx context.Context, filter bson.D, entity any) error 
 	filter = append(filter, bson.E{Key: "deleted_at", Value: nil})
 
 	if result := collection.FindOne(ctx, filter).Decode(entity); result != nil {
-		return fmt.Errorf(errFailedToDecode, result)
+		return wrapFindOneError(result)
 	}
 
 	return nil
@@ -48,7 +62,7 @@ func (s *service) FindByID(ctx context.Context, oid primitive.ObjectID, entity a
 	}
 
 	if result := collection.FindOne(ctx, filter).Decode(entity); result != nil {
-		return fmt.Errorf(errFailedToDecode, result)
+		return wrapFindOneError(result)
 	}
 
 	return nil
