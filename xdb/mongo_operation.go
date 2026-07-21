@@ -23,16 +23,8 @@ const (
 	errFailedToCloseCursor = "failed to close cursor: %v\n"
 )
 
-func IsNotFound(err error) bool {
+func (s *service) IsNotFound(err error) bool {
 	return errors.Is(err, mongo.ErrNoDocuments)
-}
-
-func wrapFindOneError(err error) error {
-	if IsNotFound(err) {
-		return fmt.Errorf(errDataNotFound, err)
-	}
-
-	return fmt.Errorf(errFailedToDecode, err)
 }
 
 func (s *service) FindOne(ctx context.Context, filter bson.D, entity any) error {
