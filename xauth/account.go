@@ -37,11 +37,11 @@ func GetAccountUUIDOrDefault(ctx context.Context) *uuid.UUID {
 	return xutils.StringToUuidOrDefault(str)
 }
 
-func CheckOwnership(ctx context.Context, accountOID primitive.ObjectID) (bool, error) {
+func CheckOwnership(ctx context.Context, accountOID primitive.ObjectID) bool {
 	oid, err := GetAccountOID(ctx)
 	if err != nil {
-		return false, fmt.Errorf("unauthorized")
+		return false
 	}
 
-	return oid == accountOID, nil
+	return oid == accountOID
 }
