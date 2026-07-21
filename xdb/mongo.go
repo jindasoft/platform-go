@@ -31,6 +31,7 @@ type MongoService interface {
 	SetIndexSearch(ctx context.Context, entity any, keys bson.D, unique bool) error
 	SetIndexUnique(ctx context.Context, entity any, keys bson.D) error
 	Count(ctx context.Context, filter bson.D, entity any) (int64, error)
+	IsNotFound(err error) bool
 }
 
 type MongoConfig struct {
