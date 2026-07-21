@@ -241,7 +241,7 @@ func validateStringWithBetweenLength(fl validator.FieldLevel) bool {
 func validateLocale(fl validator.FieldLevel) bool {
 	lang := strings.TrimSpace(fl.Field().String())
 
-	locale, err := xenums.FromLocaleCode(lang)
+	locale, err := xenums.ParseLocale(lang)
 	if err != nil {
 		xlogger.SysErrorf("Invalid validate tag for locale: %s", err)
 		return false

@@ -34,7 +34,7 @@ var LocaleMap = map[string]Locale{
 	strings.ToLower(LocaleRuRU.String()): LocaleRuRU,
 }
 
-func FromLocaleCode(locale string) (Locale, error) {
+func ParseLocale(locale string) (Locale, error) {
 	locale = strings.TrimSpace(locale)
 	locale = strings.ToLower(locale)
 

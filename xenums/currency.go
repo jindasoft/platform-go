@@ -26,7 +26,7 @@ var CurrencyMap = map[string]Currency{
 	"CNY": CurrencyCNY,
 }
 
-func FromCurrencyCode(code string) (Currency, bool) {
+func ParseCurrency(code string) (Currency, bool) {
 	currency, ok := CurrencyMap[code]
 	return currency, ok
 }
