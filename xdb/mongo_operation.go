@@ -156,8 +156,14 @@ func (s *service) InsertOne(ctx context.Context, entity any) error {
 	entitySnake := strcase.SnakeCase(entityName)
 	collection := s.mongo.Collection(entitySnake)
 
-	if err := entity.(xentities.MongoBefore).BeforeCreate(ctx); err != nil {
-		return fmt.Errorf(errFailedToPrepare, err)
+	type beforeCreate interface {
+		BeforeCreate(context.Context) error
+	}
+
+	if hook, ok := entity.(beforeCreate); ok {
+		if err := hook.BeforeCreate(ctx); err != nil {
+			return fmt.Errorf(errFailedToPrepare, err)
+		}
 	}
 
 	if _, err := collection.InsertOne(ctx, entity); err != nil {
@@ -172,8 +178,14 @@ func (s *service) InsertOneNoActor(ctx context.Context, entity any) error {
 	entitySnake := strcase.SnakeCase(entityName)
 	collection := s.mongo.Collection(entitySnake)
 
-	if err := entity.(xentities.MongoBefore).BeforeCreateNoActor(ctx); err != nil {
-		return fmt.Errorf(errFailedToPrepare, err)
+	type beforeCreateNoActor interface {
+		BeforeCreateNoActor(context.Context) error
+	}
+
+	if hook, ok := entity.(beforeCreateNoActor); ok {
+		if err := hook.BeforeCreateNoActor(ctx); err != nil {
+			return fmt.Errorf(errFailedToPrepare, err)
+		}
 	}
 
 	if _, err := collection.InsertOne(ctx, entity); err != nil {
@@ -188,8 +200,14 @@ func (s *service) UpdateOne(ctx context.Context, filter bson.D, entity any) erro
 	entitySnake := strcase.SnakeCase(entityName)
 	collection := s.mongo.Collection(entitySnake)
 
-	if err := entity.(xentities.MongoBefore).BeforeUpdate(ctx); err != nil {
-		return fmt.Errorf(errFailedToPrepare, err)
+	type beforeUpdate interface {
+		BeforeUpdate(context.Context) error
+	}
+
+	if hook, ok := entity.(beforeUpdate); ok {
+		if err := hook.BeforeUpdate(ctx); err != nil {
+			return fmt.Errorf(errFailedToPrepare, err)
+		}
 	}
 
 	// check record is not soft deleted
@@ -208,8 +226,14 @@ func (s *service) UpdateOneNoActor(ctx context.Context, filter bson.D, entity an
 	entitySnake := strcase.SnakeCase(entityName)
 	collection := s.mongo.Collection(entitySnake)
 
-	if err := entity.(xentities.MongoBefore).BeforeUpdateNoActor(ctx); err != nil {
-		return fmt.Errorf(errFailedToPrepare, err)
+	type beforeUpdateNoActor interface {
+		BeforeUpdateNoActor(context.Context) error
+	}
+
+	if hook, ok := entity.(beforeUpdateNoActor); ok {
+		if err := hook.BeforeUpdateNoActor(ctx); err != nil {
+			return fmt.Errorf(errFailedToPrepare, err)
+		}
 	}
 
 	// check record is not soft deleted
