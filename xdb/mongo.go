@@ -2,6 +2,7 @@ package xdb
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/jindasoft/jinda-platform/xlogger"
@@ -111,4 +112,12 @@ func mongoClient(ctx context.Context, cfg *MongoConfig) (*mongo.Client, error) {
 	xlogger.SysInfof("MongoDB initialized")
 
 	return client, nil
+}
+
+func wrapFindOneError(err error) error {
+	if errors.Is(err, mongo.ErrNoDocuments) {
+		return fmt.Errorf(errDataNotFound, err)
+	}
+
+	return fmt.Errorf(errFailedToDecode, err)
 }
