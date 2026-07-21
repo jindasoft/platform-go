@@ -55,20 +55,6 @@ func (b *MongoBaseModel) BeforeUpdate(ctx context.Context) error {
 	return nil
 }
 
-func (b *MongoBaseModel) BeforeSoftDelete(ctx context.Context) error {
-	accountID, err := xauth.GetAccountOID(ctx)
-	if err != nil {
-		return err
-	}
-
-	now := time.Now()
-	b.Status = StatusDeleted
-	b.DeletedAt = &now
-	b.DeletedBy = &accountID
-
-	return nil
-}
-
 func (b *MongoBaseModel) BeforeCreateNoActor(ctx context.Context) error {
 	b.ID = primitive.NewObjectID()
 	b.Status = StatusActive
