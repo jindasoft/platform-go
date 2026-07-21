@@ -241,14 +241,21 @@ func (s *service) SoftDeleteOne(ctx context.Context, filter bson.D, entity any) 
 	entitySnake := strcase.SnakeCase(entityName)
 	collection := s.mongo.Collection(entitySnake)
 
-	if err := entity.(xentities.MongoBefore).BeforeSoftDelete(ctx); err != nil {
-		return fmt.Errorf(errFailedToPrepare, err)
+	accountID, err := xauth.GetAccountOID(ctx)
+	if err != nil {
+		return err
 	}
 
 	// check record is not soft deleted
 	filter = append(filter, bson.E{Key: "deleted_at", Value: nil})
 
-	update := bson.M{"$set": entity}
+	update := bson.M{
+		"$set": bson.M{
+			"status":     xentities.StatusDeleted,
+			"deleted_by": accountID,
+			"deleted_at": time.Now(),
+		},
+	}
 	if _, err := collection.UpdateOne(ctx, filter, update); err != nil {
 		return fmt.Errorf("failed to soft delete data: %w", err)
 	}
