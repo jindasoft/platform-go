@@ -11,7 +11,7 @@ import (
 func TraceIDMiddleware() echo.MiddlewareFunc {
 	mdw := middleware.RequestIDConfig{
 		RequestIDHandler: func(c *echo.Context, requestID string) {
-			traceID := c.Request().Header.Get(xconst.HeaderXTraceID)
+			traceID := c.Request().Header.Get(xconst.HeaderJindaTraceID)
 
 			// set to context
 			ctx := c.Request().Context()
@@ -19,9 +19,9 @@ func TraceIDMiddleware() echo.MiddlewareFunc {
 			c.SetRequest(c.Request().WithContext(ctx))
 
 			// set to header
-			c.Response().Header().Set(xconst.HeaderXTraceID, traceID)
+			c.Response().Header().Set(xconst.HeaderJindaTraceID, traceID)
 		},
-		TargetHeader: xconst.HeaderXTraceID,
+		TargetHeader: xconst.HeaderJindaTraceID,
 	}
 
 	return middleware.RequestIDWithConfig(mdw)

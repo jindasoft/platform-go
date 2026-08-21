@@ -20,8 +20,7 @@ func New(ctx context.Context, debug *bool) *Service {
 
 	client.OnBeforeRequest(func(c *resty.Client, req *resty.Request) error {
 		// Set default headers
-		req.Header.Set(xconst.HeaderXCorrelationID, xutils.GetCorrelationIDString(req.Context()))
-		req.Header.Set(xconst.HeaderXTraceID, xutils.GetTraceIDString(req.Context()))
+		req.Header.Set(xconst.HeaderJindaTraceID, xutils.GetTraceIDString(req.Context()))
 		req.Header.Set(xconst.HeaderAcceptLanguage, xutils.GetLocaleString(req.Context()))
 
 		return nil
