@@ -3,7 +3,7 @@ package xmdw
 import (
 	"context"
 
-	"github.com/jindasoft/jinda-platform/xconst"
+	"github.com/jindasoft/platform-go/xconst"
 	"github.com/labstack/echo/v5"
 	"github.com/labstack/echo/v5/middleware"
 )

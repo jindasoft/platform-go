@@ -3,8 +3,8 @@ package xentities
 import (
 	"context"
 
-	"github.com/jindasoft/jinda-platform/xenums"
-	"github.com/jindasoft/jinda-platform/xutils"
+	"github.com/jindasoft/platform-go/xenums"
+	"github.com/jindasoft/platform-go/xutils"
 )
 
 type MongoLocale struct {
