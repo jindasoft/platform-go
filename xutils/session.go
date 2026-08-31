@@ -4,8 +4,8 @@ import (
 	"context"
 
 	"github.com/google/uuid"
-	"github.com/jindasoft/jinda-platform/xconst"
-	"github.com/jindasoft/jinda-platform/xenums"
+	"github.com/jindasoft/platform-go/xconst"
+	"github.com/jindasoft/platform-go/xenums"
 )
 
 func GetCorrelationIDOrDefault(ctx context.Context) *uuid.UUID {

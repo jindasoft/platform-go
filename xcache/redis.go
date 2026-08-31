@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/jindasoft/jinda-platform/xlogger"
+	"github.com/jindasoft/platform-go/xlogger"
 	"github.com/redis/go-redis/v9"
 )
 

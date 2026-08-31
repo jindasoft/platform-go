@@ -4,7 +4,7 @@ import (
 	"context"
 	"os"
 
-	"github.com/jindasoft/jinda-platform/xconst"
+	"github.com/jindasoft/platform-go/xconst"
 	prettyconsole "github.com/thessem/zap-prettyconsole"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"

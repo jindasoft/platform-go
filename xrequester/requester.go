@@ -5,8 +5,8 @@ import (
 	"time"
 
 	"github.com/go-resty/resty/v2"
-	"github.com/jindasoft/jinda-platform/xconst"
-	"github.com/jindasoft/jinda-platform/xutils"
+	"github.com/jindasoft/platform-go/xconst"
+	"github.com/jindasoft/platform-go/xutils"
 )
 
 type Service struct {

@@ -3,8 +3,8 @@ package xmdw
 import (
 	"context"
 
-	"github.com/jindasoft/jinda-platform/xconst"
-	"github.com/jindasoft/jinda-platform/xenums"
+	"github.com/jindasoft/platform-go/xconst"
+	"github.com/jindasoft/platform-go/xenums"
 	"github.com/labstack/echo/v5"
 )
 
