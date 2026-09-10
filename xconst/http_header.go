@@ -1,10 +1,10 @@
 package xconst
 
 const (
-	HeaderAcceptLanguage  string = "Accept-Language"
-	HeaderJindaTraceID    string = "Jinda-Trace-ID"
-	HeaderJindaSpanID     string = "Jinda-Span-ID"
-	HeaderJindaPlatform   string = "Jinda-Platform"
-	HeaderJindaDeviceID   string = "Jinda-Device-ID"
-	HeaderJindaInstanceID string = "Jinda-Instance-ID"
+	HeaderAcceptLanguage string = "Accept-Language"
+	HeaderTraceID        string = "Template-Trace-ID"
+	HeaderSpanID         string = "Template-Span-ID"
+	HeaderPlatform       string = "Template-Platform"
+	HeaderDeviceID       string = "Template-Device-ID"
+	HeaderInstanceID     string = "Template-Instance-ID"
 )

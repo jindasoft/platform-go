@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/jindasoft/platform-go/xlogger"
+	"github.com/jindasoft/template-platform-go/xlogger"
 	amqp "github.com/rabbitmq/amqp091-go"
 )
 

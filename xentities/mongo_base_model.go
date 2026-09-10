@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/jindasoft/platform-go/xauth"
+	"github.com/jindasoft/template-platform-go/xauth"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 

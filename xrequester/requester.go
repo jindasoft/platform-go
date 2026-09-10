@@ -5,8 +5,8 @@ import (
 	"time"
 
 	"github.com/go-resty/resty/v2"
-	"github.com/jindasoft/platform-go/xconst"
-	"github.com/jindasoft/platform-go/xutils"
+	"github.com/jindasoft/template-platform-go/xconst"
+	"github.com/jindasoft/template-platform-go/xutils"
 )
 
 type Service struct {
@@ -20,7 +20,7 @@ func New(ctx context.Context, debug *bool) *Service {
 
 	client.OnBeforeRequest(func(c *resty.Client, req *resty.Request) error {
 		// Set default headers
-		req.Header.Set(xconst.HeaderJindaTraceID, xutils.GetTraceIDString(req.Context()))
+		req.Header.Set(xconst.HeaderTraceID, xutils.GetTraceIDString(req.Context()))
 		req.Header.Set(xconst.HeaderAcceptLanguage, xutils.GetLocaleString(req.Context()))
 
 		return nil

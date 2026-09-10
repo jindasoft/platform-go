@@ -3,7 +3,7 @@ package xmdw
 import (
 	"context"
 
-	"github.com/jindasoft/platform-go/xconst"
+	"github.com/jindasoft/template-platform-go/xconst"
 	"github.com/labstack/echo/v5"
 	"github.com/labstack/echo/v5/middleware"
 )
@@ -11,7 +11,7 @@ import (
 func TraceIDMiddleware() echo.MiddlewareFunc {
 	mdw := middleware.RequestIDConfig{
 		RequestIDHandler: func(c *echo.Context, requestID string) {
-			traceID := c.Request().Header.Get(xconst.HeaderJindaTraceID)
+			traceID := c.Request().Header.Get(xconst.HeaderTraceID)
 
 			// set to context
 			ctx := c.Request().Context()
@@ -19,9 +19,9 @@ func TraceIDMiddleware() echo.MiddlewareFunc {
 			c.SetRequest(c.Request().WithContext(ctx))
 
 			// set to header
-			c.Response().Header().Set(xconst.HeaderJindaTraceID, traceID)
+			c.Response().Header().Set(xconst.HeaderTraceID, traceID)
 		},
-		TargetHeader: xconst.HeaderJindaTraceID,
+		TargetHeader: xconst.HeaderTraceID,
 	}
 
 	return middleware.RequestIDWithConfig(mdw)
