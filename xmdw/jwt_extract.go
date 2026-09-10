@@ -7,8 +7,7 @@ import (
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
-	"github.com/jindasoft/platform-go/xconst"
-	"github.com/jindasoft/platform-go/xlogger"
+	"github.com/jindasoft/template-platform-go/xconst"
 	"github.com/labstack/echo/v5"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
@@ -26,25 +25,29 @@ func JwtExtractMiddleware() echo.MiddlewareFunc {
 			}
 
 			claims := jwt.MapClaims{}
-			_, _ = jwt.ParseWithClaims(auth, claims, func(token *jwt.Token) (any, error) {
-				return nil, nil
-			})
+			_, _, err = new(jwt.Parser).ParseUnverified(auth, claims)
+			if err != nil {
+				return next(c)
+			}
 
 			// Set the claims in the context for use in handlers
-			accountID, _ := claims["sub"].(string)
-
-			oid, err := primitive.ObjectIDFromHex(accountID)
-			if err != nil {
-				xlogger.SysErrorf("JwtExtractMiddleware: %v", err)
+			sub, ok := claims["sub"].(string)
+			if !ok {
+				return next(c)
 			}
-			uuid, err := objectIDToUuid(oid)
+
+			accountOID, err := primitive.ObjectIDFromHex(sub)
 			if err != nil {
-				xlogger.SysErrorf("JwtExtractMiddleware: %v", err)
+				return next(c)
+			}
+			accountUUID, err := objectIDToUUID(accountOID)
+			if err != nil {
+				return next(c)
 			}
 
 			ctx := c.Request().Context()
-			ctx = context.WithValue(ctx, xconst.ContextAccountOID, oid)
-			ctx = context.WithValue(ctx, xconst.ContextAccountUUID, uuid)
+			ctx = context.WithValue(ctx, xconst.ContextAccountOID, accountOID)
+			ctx = context.WithValue(ctx, xconst.ContextAccountUUID, accountUUID)
 
 			c.SetRequest(c.Request().WithContext(ctx))
 
@@ -69,7 +72,7 @@ func extractToken(c *echo.Context) (string, error) {
 	return header, nil
 }
 
-func objectIDToUuid(oid primitive.ObjectID) (uuid.UUID, error) {
+func objectIDToUUID(oid primitive.ObjectID) (uuid.UUID, error) {
 	objIDBytes := oid[:]
 
 	padded := make([]byte, 16)

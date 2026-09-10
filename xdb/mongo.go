@@ -5,7 +5,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/jindasoft/platform-go/xlogger"
+	"github.com/jindasoft/template-platform-go/xlogger"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/event"
@@ -36,12 +36,8 @@ type MongoService interface {
 }
 
 type MongoConfig struct {
-	Host     string
-	Port     int
+	URI      string
 	Database string
-	Username string
-	Password string `json:"-"`
-	Options  string
 	IsDebug  bool
 }
 
@@ -64,22 +60,10 @@ func NewMongoService(ctx context.Context, cfg *MongoConfig) (*service, error) {
 }
 
 func mongoClient(ctx context.Context, cfg *MongoConfig) (*mongo.Client, error) {
-	connection := fmt.Sprintf(
-		"mongodb://%s:%s@%s:%d",
-		cfg.Username,
-		cfg.Password,
-		cfg.Host,
-		cfg.Port,
-	)
-
-	if cfg.Options != "" {
-		connection += fmt.Sprintf("/?%s", cfg.Options)
-	}
-
 	// Use the SetServerAPIOptions() method to set the version of the Stable API on the client
 	serverAPI := options.ServerAPI(options.ServerAPIVersion1)
 	opts := options.Client().
-		ApplyURI(connection).
+		ApplyURI(cfg.URI).
 		SetServerAPIOptions(serverAPI)
 
 	if cfg.IsDebug {

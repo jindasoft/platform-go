@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/jindasoft/platform-go/xauth"
-	"github.com/jindasoft/platform-go/xutils"
+	"github.com/jindasoft/template-platform-go/xauth"
+	"github.com/jindasoft/template-platform-go/xutils"
 	"github.com/jinzhu/copier"
 	"go.uber.org/zap"
 )
